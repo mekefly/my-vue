@@ -1,7 +1,15 @@
-import { Component } from "../component/component";
+import { ComponentInstance, Setup } from "../component/component";
 
 export interface VNode {
-  type: string | VNode | Component;
-  props: { [key: string]: any };
+  type: string | ComponentInstance | null | undefined;
+  props?: { [key: string]: any } | null;
   children: Array<string | VNode>;
+  elm?: Element | null;
+  ____VNODE: true;
+}
+export function isVNode(v: any): v is VNode {
+  if (typeof v === "object" && v.____VNODE) {
+    return true;
+  }
+  return false;
 }
