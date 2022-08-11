@@ -1,11 +1,12 @@
-import { filterOutNull } from "../utils";
+import { isString } from "@wormery/utils";
+import { filterOutNull, isText } from "../utils";
 import { patchVNode } from "./patchVNode";
 import { VNode } from "./vnode";
 
 export function mount(
   parent: HTMLElement,
   vnode: VNode,
-  oldEls?: HTMLElement[]
+  oldEls?: Array<HTMLElement | Text>
 ): Array<HTMLElement | string> {
   if (!parent) {
     return [];
@@ -13,7 +14,11 @@ export function mount(
 
   if (oldEls) {
     oldEls.forEach((el) => {
-      el.remove();
+      if (isText(el)) {
+        parent.removeChild(el);
+      } else {
+        el.remove();
+      }
     });
   }
   const els = patchVNode(vnode, parent);

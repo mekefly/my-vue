@@ -9,7 +9,7 @@ export function patchVNode(
     return [];
   }
   if (isString(vnode)) {
-    return [vnode];
+    return [document.createTextNode(vnode) as any];
   }
   const { type, children } = vnode;
   //如果type不存在,这里认为是空标签,空标签返回子元素

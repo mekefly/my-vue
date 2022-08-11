@@ -34,10 +34,17 @@
 
         return () => {
           console.log("renderUpdate");
-          return <div>{rv.value}</div>;
+          return (
+            <>
+              {rv.value}
+              <>你好</>
+            </>
+          );
         };
       }
       createApp(Text).mount("#app");
+      const xxx = document.createTextNode("33");
+      console.log(xxx);
     </script>
   </body>
 </html>
