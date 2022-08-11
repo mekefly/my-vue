@@ -8,14 +8,16 @@ export class Dep {
     if (!watcher) {
       return;
     }
+
     watcher.deps.add(this);
     this.watchers.add(watcher);
   }
   refresh() {
-    this.watchers.forEach((watcher) => {
-      watcher.refresh();
+    const watchers = this.watchers;
+    this.watchers = new Set();
+    watchers.forEach((watcher) => {
       watcher.deps.delete(this);
+      watcher.refresh();
     });
-    this.watchers.clear();
   }
 }

@@ -1,0 +1,16 @@
+{
+  "configurations": [
+    {
+      "type": "pwa-chrome",
+      "name": "http://127.0.0.1:3000/example/ref/ref.html",
+      "request": "launch",
+      "url": "http://127.0.0.1:3000/example/ref/ref.html"
+    },
+    {
+      "type": "pwa-chrome",
+      "name": "http://127.0.0.1:3000/src/observer/dep.ts",
+      "request": "launch",
+      "url": "http://127.0.0.1:3000/src/observer/dep.ts"
+    }
+  ]
+}

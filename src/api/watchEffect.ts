@@ -1,4 +1,4 @@
-import { Watcher, watcher } from "../observer/watcher";
+import { Watcher } from "../observer/watcher";
 
 export function watchEffect(callback: () => void) {
   const watcher = new Watcher(work);

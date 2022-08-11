@@ -18,35 +18,23 @@
     <div id="app"></div>
 
     <script type="text/babel">
-      // const { createApp, h, ref, computed, defineComponent } = Vue;
+      console.log(MyVue);
+      const { h, ref, watchEffect, computed } = MyVue;
       // babel会将标签编译为React.createElement,所以我们打了个补丁
-      console.log(MyVue.h);
       const React = {
         createElement: MyVue.h,
       };
-      function Com(...params) {
-        console.log("params", params);
-      }
-      console.log("text");
-      // const div = <div></div>;
-      const Text = (
-        <div>
-          <Com></Com>
-          text
-          <p></p>
-          text2
-        </div>
-      );
-      console.log(Text);
-      // const divDiv = (
-      //   <div>
-      //     <Text class={{}}></Text>
-      //   </div>
-      // );
-
-      // const App = {};
-
-      // createApp(App).mount("#app");
+      const x = ref(3);
+      const cx = computed(() => {
+        return x.value + 1;
+      });
+      console.log(cx.value);
+      x.value = 2;
+      console.log(cx.value);
+      x.value = 1;
+      console.log(cx.value);
+      x.value = 0;
+      console.log(cx.value);
     </script>
   </body>
 </html>

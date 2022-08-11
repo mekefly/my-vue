@@ -4,7 +4,11 @@ export const isObserver = Symbol();
 
 export function observer<T extends object>(
   v: T,
-  config?: { deep?: boolean }
+  config: {
+    deep?: boolean;
+    set?: ProxyHandler<T>["set"];
+    get?: ProxyHandler<T>["get"];
+  } = {}
 ): T {
   const _v: any = v;
   _v[isObserver] = true as any;
@@ -22,17 +26,23 @@ export function observer<T extends object>(
 
   const dep = new Dep();
   return new Proxy(v, {
-    get(target, p) {
+    get(target, p, receiver) {
       dep.rely();
+
+      config.get?.(target, p, receiver);
       return _v[p];
     },
     set(target, p, value, receiver) {
-      dep.refresh();
       //对传入的新值响应化
       if (config?.deep && typeof value === "object") {
-        observer(value);
+        _v[p] = observer(value);
+      } else {
+        _v[p] = value;
       }
-      _v[p] = value;
+
+      dep.refresh();
+
+      config.set?.(target, p, value, receiver);
       return true;
     },
   });
