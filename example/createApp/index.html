@@ -26,8 +26,15 @@
       };
 
       function Text(params) {
+        const rv = ref("text");
+
+        setTimeout(() => {
+          rv.value = "你好吗";
+        }, 2000);
+
         return () => {
-          return <div>text</div>;
+          console.log("renderUpdate");
+          return <div>{rv.value}</div>;
         };
       }
       createApp(Text).mount("#app");

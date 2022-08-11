@@ -1,15 +1,13 @@
-import { Setup, isSetup, isComponentInstance } from "../component/component";
+import { Setup } from "../component/component";
 import { VNode } from "../VNode/vnode";
 import { h } from "../VNode/h";
-import { isString } from "@wormery/utils";
-import { patchVNode } from "../VNode/patchVNode";
-import { filterOutNull } from "../utils";
+import { mount } from "../VNode/mount";
 export function createApp(app: Setup | VNode) {
   const vnode = h(app);
 
   const elm = vnode?.elm;
   return {
-    mount(el: HTMLDivElement | string) {
+    mount(el: HTMLElement | string) {
       if (!el) {
         return;
       }
@@ -20,16 +18,10 @@ export function createApp(app: Setup | VNode) {
         if (!appContainer) {
           return;
         }
-        mount(appContainer, vnode);
+        mount(appContainer as any, vnode);
       } else {
         mount(el, vnode);
       }
     },
   };
-}
-
-function mount(parent: Element, vnode: VNode) {
-  console.log(filterOutNull(patchVNode(vnode)));
-
-  parent.append(...filterOutNull(patchVNode(vnode)));
 }

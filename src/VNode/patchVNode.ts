@@ -2,8 +2,9 @@ import { isString } from "@wormery/utils";
 import { isComponentInstance } from "../component/component";
 import { VNode } from "./vnode";
 export function patchVNode(
-  vnode: VNode | string | null
-): Array<HTMLElement | string | null> {
+  vnode: VNode | string | null,
+  parentEl: HTMLElement
+): Array<HTMLElement | string> {
   if (!vnode) {
     return [];
   }
@@ -16,7 +17,7 @@ export function patchVNode(
     const res: any[] = [];
 
     children.forEach((child) => {
-      res.push(...patchVNode(child));
+      res.push(...patchVNode(child, parentEl));
     });
     return res;
   }
@@ -28,9 +29,7 @@ export function patchVNode(
     }
 
     children.forEach((child) => {
-      el.append(
-        ...(patchVNode(child).filter((item) => item !== null) as any[])
-      );
+      el.append(...patchVNode(child, el));
     });
 
     return [el];
@@ -38,10 +37,13 @@ export function patchVNode(
   //如果是ComponentInstance的话要执行ComponentMount
   if (isComponentInstance(type)) {
     const vnode = type.vnode;
+    type.parentEl = parentEl;
     if (!vnode) {
       return [];
     }
-    return patchVNode(vnode);
+    const _el = patchVNode(vnode, parentEl);
+    type.$el = _el;
+    return _el;
   }
   return [];
 }

@@ -1,10 +1,14 @@
 import { isObject } from "@wormery/utils";
 import { VNode } from "../VNode";
 import { watchEffect } from "../api/watchEffect";
+import { mount } from "../VNode/mount";
 export interface ComponentInstance {
   vnode: VNode | null;
   setup: Setup;
   render: Render;
+  parentEl: null | HTMLElement;
+  update(): void;
+  $el: Array<HTMLElement | string>;
   ____isComponentInstance: true;
 }
 export function isComponentInstance(v: any): v is ComponentInstance {
@@ -32,9 +36,15 @@ export function createInstance(
 
   _instance.render = render;
 
-  watchEffect(() => {
+  const update = () => {
     _instance.vnode = render?.();
-  });
+    console.log(_instance.$el);
+
+    _instance.$el = mount(_instance.parentEl, _instance.vnode, _instance.$el);
+  };
+  _instance.update = update;
+
+  watchEffect(update);
   return _instance;
 }
 export type Setup = (props: Props) => Render;
