@@ -26,7 +26,14 @@ const moduleDir = path.resolve(__dirname, "./");
 
 const getPath = (_path) => path.resolve(moduleDir, _path);
 
-const buildOptions = ["cjs", "esm", "iife"];
+const buildOptions = (function () {
+  const buildOptionsEnv = process.env["build-options"];
+  if (!buildOptionsEnv || buildOptionsEnv === "all") {
+    return ["cjs", "esm", "iife"];
+  }
+
+  return buildOptionsEnv.split(",");
+})();
 
 function genFileName(format, name, isProd) {
   const prefix = getPath("dist");

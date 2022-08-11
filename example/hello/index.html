@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+  </head>
+  <body>
+    <!-- 对代码进行编译为浏览器可识别的代码，这里使用了jsx -->
+    <!-- https://www.babeljs.cn -->
+    <script src="https://unpkg.com/@babel/standalone@7.17.11/babel.min.js"></script>
+    <!-- vue框架，著名的前端框架 -->
+    <!-- https://v3.cn.vuejs.org/ -->
+    <script src="https://unpkg.com/vue@3.2.33/dist/vue.global.js"></script>
+    <script src="../../dist/my-vue.iife.js"></script>
+
+    <div id="app"></div>
+
+    <script type="text/babel">
+      // const { createApp, h, ref, computed, defineComponent } = Vue;
+      // babel会将标签编译为React.createElement,所以我们打了个补丁
+      console.log(MyVue.h);
+      const React = {
+        createElement: MyVue.h,
+      };
+      // const div = <div></div>;
+      const Text = (
+        <div>
+          text
+          <p></p>
+          text2
+        </div>
+      );
+      console.log(Text);
+      // const divDiv = (
+      //   <div>
+      //     <Text class={{}}></Text>
+      //   </div>
+      // );
+
+      // const App = {};
+
+      // createApp(App).mount("#app");
+    </script>
+  </body>
+</html>

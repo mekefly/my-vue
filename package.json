@@ -1,12 +1,12 @@
 {
-	"name": "template",
-	"shortName": "template",
+	"name": "my-vue",
+	"shortName": "my-vue",
 	"version": "0.0.0-bate.0",
   "main": "index.js",
   "types": "dist/index.d.ts",
-  "module": "dist/template.esm.js",
-  "unpkg": "dist/template.iife.js",
-  "jsdelivr": "dist/template.iife.js",
+  "module": "dist/my-vue.esm.js",
+  "unpkg": "dist/my-vue.iife.js",
+  "jsdelivr": "dist/my-vue.iife.js",
   "author": {
     "email": "mekefly@qq.com",
     "name": "mekefly",
@@ -24,6 +24,8 @@
 		"build:all": "pnpm build:dev && pnpm build:prod",
 		"build:prod": "pnpm rollup -c ./rollup.config.js --environment NODE_ENV:production",
 		"build:dev": "pnpm rollup -c ./rollup.config.js --environment NODE_ENV:development",
+		"iife": "pnpm rollup -c ./rollup.config.js --environment NODE_ENV:development --environment build-options:iife",
+		"dev": "pnpm rollup --watch -c ./rollup.config.js --environment NODE_ENV:development --environment build-options:iife",
     "pub": "npm publish"
 	},
 	"dependencies": {
