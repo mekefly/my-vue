@@ -19,12 +19,12 @@
 
     <script type="text/babel">
       console.log(MyVue);
-      const { h, ref, watchEffect, computed } = MyVue;
+      const { h, ref, watchEffect, computed, observer } = MyVue;
       // babel会将标签编译为React.createElement,所以我们打了个补丁
       const React = {
         createElement: MyVue.h,
       };
-      const x = ref(3);
+      const x = observer({ value: 0 });
       const cx = computed(() => {
         return x.value + 1;
       });

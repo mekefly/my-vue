@@ -26,18 +26,29 @@
       };
 
       function Text(params) {
-        const rv = ref("text");
+        const rv = ref(true);
 
         setTimeout(() => {
-          rv.value = "你好吗";
+          rv.value = !rv.value;
+
+          // setTimeout(() => {
+          //   rv.value = !rv.value;
+          // }, 1000);
         }, 1000);
 
         return () => {
           console.log("renderUpdate");
           return (
             <>
-              {rv.value}
-              <>你好</>
+              {rv.value ? (
+                <>
+                  8439
+                  <span>333</span>
+                </>
+              ) : (
+                <>222</>
+              )}
+              <span>你好</span>
             </>
           );
         };

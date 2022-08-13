@@ -18,31 +18,22 @@
     <div id="app"></div>
 
     <script type="text/babel">
-      const { createApp, h, ref, computed, defineComponent } = MyVue;
+      console.log(MyVue);
+      const { h, ref, watchEffect, computed, observer } = MyVue;
       // babel会将标签编译为React.createElement,所以我们打了个补丁
-
       const React = {
         createElement: MyVue.h,
       };
+      const xxxx = ref(false);
+      setInterval(() => {
+        console.group("setInterval");
+        xxxx.value = !xxxx.value;
+        console.groupEnd();
+      }, 1000);
 
-      function Text(params) {
-        const rv = ref("text");
-
-        setTimeout(() => {
-          rv.value = "你好吗";
-        }, 1000);
-
-        return () => {
-          console.log("renderUpdate");
-          return (
-            <>
-              {rv.value}
-              <>你好</>
-            </>
-          );
-        };
-      }
-      createApp(Text).mount("#app");
+      watchEffect(() => {
+        console.log("x更新了", xxxx.value);
+      });
     </script>
   </body>
 </html>

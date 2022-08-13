@@ -22,24 +22,18 @@
       // babel会将标签编译为React.createElement,所以我们打了个补丁
 
       const React = {
-        createElement: MyVue.h,
+        createElement: h,
       };
 
       function Text(params) {
-        const rv = ref("text");
+        const rv = ref(true);
 
-        setTimeout(() => {
-          rv.value = "你好吗";
+        setInterval(() => {
+          rv.value = !rv.value;
         }, 1000);
 
         return () => {
-          console.log("renderUpdate");
-          return (
-            <>
-              {rv.value}
-              <>你好</>
-            </>
-          );
+          return <>{rv.value ? <>8439</> : <div>222</div>}</>;
         };
       }
       createApp(Text).mount("#app");

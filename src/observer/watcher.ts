@@ -2,11 +2,15 @@ import { Dep } from "./dep";
 
 export let watcher: Watcher | null | undefined;
 const room: Array<null | Watcher | undefined> = [];
-
+export function getWatcher(): Watcher | null | undefined {
+  return watcher;
+}
+let idx = 0;
 export class Watcher {
   constructor(callback: () => void) {
     this.callback = callback;
   }
+  id: number = idx++;
   callback: () => void;
 
   deps: Set<Dep> = new Set();
@@ -16,6 +20,7 @@ export class Watcher {
   }
   survey() {
     room.push(watcher);
+
     watcher = this;
   }
   leave() {

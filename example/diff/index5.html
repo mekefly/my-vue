@@ -18,28 +18,35 @@
     <div id="app"></div>
 
     <script type="text/babel">
-      const { createApp, h, ref, computed, defineComponent } = MyVue;
+      const { createApp, h, ref, computed, defineComponent, onUnmounted } =
+        MyVue;
       // babel会将标签编译为React.createElement,所以我们打了个补丁
 
       const React = {
-        createElement: MyVue.h,
+        createElement: h,
       };
+      function Test2() {
+        onUnmounted(() => {
+          console.log("Test2:onUnmounted");
+        });
+        console.log("33");
+        return () => {
+          return <div>name</div>;
+        };
+      }
 
       function Text(params) {
-        const rv = ref("text");
+        const rv = ref(true);
 
-        setTimeout(() => {
-          rv.value = "你好吗";
-        }, 1000);
+        // setTimeout(() => {
+        //   rv.value = !rv.value;
+        // }, 500);
+        setInterval(() => {
+          rv.value = !rv.value;
+        }, 500);
 
         return () => {
-          console.log("renderUpdate");
-          return (
-            <>
-              {rv.value}
-              <>你好</>
-            </>
-          );
+          return rv.value ? <>8439</> : <Test2></Test2>;
         };
       }
       createApp(Text).mount("#app");

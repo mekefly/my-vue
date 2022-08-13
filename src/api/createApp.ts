@@ -5,23 +5,25 @@ import { mount } from "../VNode/mount";
 export function createApp(app: Setup | VNode) {
   const vnode = h(app);
 
-  const elm = vnode?.elm;
   return {
     mount(el: HTMLElement | string) {
       if (!el) {
         return;
       }
-      console.log(el);
 
       if (typeof el === "string") {
         const appContainer = document.querySelector(el);
         if (!appContainer) {
           return;
         }
-        mount(appContainer as any, vnode);
+
+        create(appContainer, vnode);
       } else {
-        mount(el, vnode);
+        create(el, vnode);
       }
     },
   };
+}
+function create(el: Element, vnode: VNode) {
+  mount(el, vnode);
 }

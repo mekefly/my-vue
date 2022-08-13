@@ -9,3 +9,12 @@ export function watchEffect(callback: () => void) {
   }
   work();
 }
+export function watchEffectBind(callback: () => void) {
+  const watcher = new Watcher(work);
+  function work() {
+    watcher.survey();
+    callback();
+    watcher.leave();
+  }
+  return work;
+}
